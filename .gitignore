@@ -26,3 +26,18 @@ frontend/.env.*.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+
+############################
+# Backend
+############################
+backend/.bundle
+backend/db/*.sqlite3
+backend/db/*.sqlite3-journal
+backend/log/*
+backend/tmp/*
+!backend/log/.keep
+!backend/tmp/.keep
+backend/.byebug_history
+backend/public/system
+/backend/log
+/backend/tmp
