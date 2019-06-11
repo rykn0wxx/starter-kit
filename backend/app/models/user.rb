@@ -20,6 +20,7 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :groups, :dependent => :destroy
+  has_many :boards, :dependent => :destroy
   has_many :memberships
 
   validates :user_name, :presence => true, :uniqueness => true, :length => { maximum: 20 }
