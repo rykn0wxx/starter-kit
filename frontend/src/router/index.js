@@ -7,19 +7,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
-
+import _ from 'lodash'
 // Routes
 import paths from './paths'
 
-function genRoutes (pathObj) {
+let ctr = 0
+
+function genRoutes (pathObj, idx, parentPath) {
   const routes = {
     name: pathObj.name,
     path: pathObj.path,
     meta: pathObj.meta ? pathObj.meta : { public: false },
     component: (resolve) => import(`@/views/${pathObj.view}.vue`).then(resolve)
   }
+  routes.meta.index = ctr++
+  // ctr++
   if (pathObj.redirect) routes.redirect = pathObj.redirect
-  if (pathObj.children) routes.children = pathObj.children.map(path => genRoutes(path))
+  if (pathObj.children) routes.children = pathObj.children.map((path, indx) => genRoutes(path, indx, routes.meta.index))
   return routes
 }
 
@@ -28,7 +32,7 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: paths.map(path => genRoutes(path)).concat([{ path: '*', redirect: '/' }]),
+  routes: paths.map((path, idx) => genRoutes(path, idx)).concat([{ path: '*', redirect: '/' }]),
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition

@@ -6,15 +6,16 @@ const requireComponent = require.context(
 )
 
 requireComponent.keys().forEach(fileName => {
-  if (fileName === './index.js' || fileName.toLowerCase().indexOf('mixin.js') !== -1) {
+  if (fileName === './index.js') {
     return
   }
   const componentConfig = requireComponent(fileName)
 
-  const componentName = upperFirst(
+  const compName = upperFirst(
     camelCase(
       fileName.replace(/^\.\//, '').replace(/\.\w+$/, '')
     )
   )
+  const componentName = `Glb${compName}`
   Vue.component(componentName, componentConfig.default || componentConfig)
 })

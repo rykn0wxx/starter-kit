@@ -1,5 +1,5 @@
 <template>
-  <RouterView class="page-container app relative min-h-full h-full w-full overflow-hidden antialiased" v-cloak />
+  <RouterView class="page-container app relative overflow-hidden antialiased" v-cloak />
 </template>
 
 <script>
