@@ -1,0 +1,91 @@
+@mixin md-override-palette ($palette) {
+  $md-default-palette: map-merge($md-default-palette, $palette) !global;
+}
+
+// @mixin md-register-theme ($name, $palette: $md-default-palette) {
+//   $palette: map-merge($md-default-palette, $palette);
+//   $theme: map-merge($md-themes, (
+//     #{$name}: $palette
+//   ));
+
+//   :root {
+//     @each $type, $value in $palette {
+//       --md-theme-#{$name}-#{$type}: #{$value}
+//     }
+//   }
+
+//   $md-themes: $theme !global;
+//   $md-theme-name: $name !global;
+
+//   @include md-base-theme;
+// }
+
+@mixin md-theme-component () {
+  @each $theme, $palette in $md-themes {
+    $md-theme-palette: map-merge($md-theme-palette, $palette) !global;
+    $md-current-theme: $theme !global;
+
+    @if( $theme == $md-theme-name or $md-theme-name == 'all' ) {
+      &.md-theme-#{$theme} {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin md-theme-component-relative () {
+  @each $theme, $palette in $md-themes {
+    $md-theme-palette: map-merge($md-theme-palette, $palette) !global;
+    $md-current-theme: $theme !global;
+
+    @if( $theme == $md-theme-name or $md-theme-name == 'all' ) {
+      .md-theme-#{$theme} & {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin md-theme-property ($property, $type, $background: "", $opacity: "") {
+  $value: md-theme($type, $background);
+  $variant: null;
+
+  @if $background != "" {
+    $variant: -on-#{$background};
+  }
+
+  @if $opacity != "" {
+    $value: rgba($value, $opacity);
+  }
+
+  #{$property}: $value;
+  #{$property}: var(--md-theme-#{$md-current-theme}-#{$type}#{$variant}, $value);
+}
+
+@mixin md-theme-property-darken ($property, $type, $background: "", $darken: "") {
+  $value: md-theme($type, $background);
+  $variant: null;
+
+  @if $background != "" {
+    $variant: -on-#{$background};
+  }
+
+  @if $darken != "" {
+    $value: darken($value, $darken);
+  }
+
+  #{$property}: $value;
+  #{$property}: var(--md-theme-#{$md-current-theme}-#{$type}#{$variant}, $value);
+}
+
+@mixin md-theme-property-by-hue ($property, $color, $hue, $type, $secondary) {
+  $hex: md-get-palette-color($color, $hue);
+  $variant: null;
+
+  @if $secondary != "" {
+    $variant: -#{$secondary};
+  }
+
+  #{$property}: $hex;
+  #{$property}: var(--md-theme-#{$md-current-theme}-#{$type}#{variant}, $hex);
+}

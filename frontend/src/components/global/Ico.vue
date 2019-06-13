@@ -17,7 +17,6 @@ export default {
     const iconSize = `${this.size}px`
     const iconName = _.snakeCase(this.name)
     return createElement('i', {
-      inheritAttrs: false,
       class: 'material-icons ico',
       style: {
         width: iconSize,

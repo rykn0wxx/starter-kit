@@ -1,17 +1,30 @@
 <template>
-  <div class="demo bg-pink-500">
+  <div class="demo">
     <h1 class="md-title">
       Demo
     </h1>
     <div class="layout-row flex">
-      <GlbIco name="question-answer" size="36" class="myclass" />
+      <div>
+        <GlbIco name="question-answer" size="36" />
+      </div>
+      <div>
+      <mat-field>
+        <label>Initial Value</label>
+        <mat-input v-model="initial"></mat-input>
+      </mat-field>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Demo'
+  name: 'Demo',
+  data () {
+    return {
+      initial: 'aaa'
+    }
+  }
 }
 </script>
 

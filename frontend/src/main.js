@@ -10,6 +10,7 @@ import media from '@/plugins/media'
 
 // Global Components
 import '@/components/global'
+import '@/components/mat'
 
 // Tailwind Styles
 import '@/assets/tailwind-styles.css'
